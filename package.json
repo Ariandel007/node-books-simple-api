@@ -1,0 +1,32 @@
+{
+  "name": "books-simple-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ariandel007/node-books-simple-api.git"
+  },
+  "author": "Alexander Gonzalo Urbina Mar",
+  "license": "MIT License",
+  "bugs": {
+    "url": "https://github.com/Ariandel007/node-books-simple-api/issues"
+  },
+  "homepage": "https://github.com/Ariandel007/node-books-simple-api#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.11.7",
+    "validator": "^13.5.2"
+  },
+  "devDependencies": {
+    "env-cmd": "^10.1.0",
+    "jest": "^26.6.3",
+    "nodemon": "^2.0.6",
+    "supertest": "^6.0.1"
+  }
+}
