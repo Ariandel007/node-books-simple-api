@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
+//const Order = require('./order');
 
 const userSchema = new mongoose.Schema(
     {
@@ -53,6 +54,18 @@ const userSchema = new mongoose.Schema(
         timestamps: true
     }
 );
+
+userSchema.virtual('orders', {
+    ref: 'Order',
+    localField: '_id',
+    foreignField: 'client'
+});
+
+// Lo siguiente es si quisieramos hacer eliminacion en cascada, aunque este no es el caso
+// userSchema.pre('remove', async function(next) {
+//     const user = this;
+//     await Order.deleteMany({ client: user._id});
+// });
 
 const User = mongoose.model('User', userSchema);
 
