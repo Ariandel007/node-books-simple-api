@@ -5,6 +5,6 @@ const states = {
     ENVOY: 'envoy'
 }
 
-module.exports = {
+export default {
     states
 }

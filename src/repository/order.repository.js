@@ -1,27 +1,34 @@
 const Order = require('../models/order');
 
-getAll = () => {
-    const filter = {};
-    return await Order.find(filter).exec();
-}
+class OrderRepository {
 
-getOne = (filterParams) => {
-    const filter = {};
-    if (filterParams.id != null) {
-        filter['_id'] = filterParams.id;
+    constructor() {}
+
+    getAll = async () => {
+        const filter = {};
+        return await Order.find(filter).exec();
     }
-
-    return await Order.findOne(filter).exec();
+    
+    getOne = async (filterParams) => {
+        const filter = {};
+        if (filterParams.id != null) {
+            filter['_id'] = filterParams.id;
+        }
+    
+        return await Order.findOne(filter).exec();
+    }
+    
+    deleteById = async (id) => {
+        return await Order.deleteOne({'_id': id});
+    }
+    
+    create = async (order) => {
+        return await new Order(order).save();
+    }
+    
+    update = async (orderToUpdate) => {
+        return await Order.findByIdAndUpdate(orderToUpdate._id, orderToUpdate, { new: true, runValidators: true }).exec();
+    }
 }
 
-deleteById = (id) => {
-    return await Order.deleteOne({'_id': id});
-}
-
-create = (order) => {
-    return await new Order(order).save();
-}
-
-update = (orderToUpdate) => {
-    return await Order.findByIdAndUpdate(orderToUpdate._id, orderToUpdate, { new: true, runValidators: true }).exec();
-}
+module.exports = OrderRepository;

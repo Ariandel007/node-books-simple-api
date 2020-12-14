@@ -1,27 +1,34 @@
 const Book = require('../models/book');
 
-getAll = () => {
-    const filter = {};
-    return await Book.find(filter).exec();
-}
+class BookRepository {
 
-getOne = (filterParams) => {
-    const filter = {};
-    if (filterParams.id != null) {
-        filter['_id'] = filterParams.id;
+    constructor() {}
+
+    getAll = async () => {
+        const filter = {};
+        return await Book.find(filter).exec();
     }
-
-    return await Book.findOne(filter).exec();
+    
+    getOne = async (filterParams) => {
+        const filter = {};
+        if (filterParams.id != null) {
+            filter['_id'] = filterParams.id;
+        }
+    
+        return await Book.findOne(filter).exec();
+    }
+    
+    deleteById = async (id) => {
+        return await Book.deleteOne({'_id': id});
+    }
+    
+    create = async (book) => {
+        return await new Book(book).save();
+    }
+    
+    update = async (bookToUpdate) => {
+        return await Book.findByIdAndUpdate(bookToUpdate._id, bookToUpdate, { new: true, runValidators: true }).exec();
+    }
 }
 
-deleteById = (id) => {
-    return await Book.deleteOne({'_id': id});
-}
-
-create = (book) => {
-    return await new Book(book).save();
-}
-
-update = (bookToUpdate) => {
-    return await Book.findByIdAndUpdate(bookToUpdate._id, bookToUpdate, { new: true, runValidators: true }).exec();
-}
+module.exports = BookRepository;
