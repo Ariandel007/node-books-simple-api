@@ -1,5 +1,6 @@
 class BookToUpdateDTO {
     constructor(bookToUpdate) {
+        
         if (bookToUpdate.isbn != null) {
             this.isbn = bookToUpdate.isbn;
         }
