@@ -49,6 +49,11 @@ const userSchema = new mongoose.Schema(
         address: {
             type: String,
             required: true
+        },
+        rol: {
+            type: String,
+            default: 'user',
+            required: true
         }
     },
     {

@@ -1,4 +1,6 @@
 const UserRepository = require('../repository/user.repository');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 class UserService {
     
@@ -24,6 +26,31 @@ class UserService {
 
     update = async (userToUpdate) => {
         return await this.userRepository.update(userToUpdate);
+    }
+
+    login = async (userToLogin) => {
+        const filter = {
+            email: userToLogin.email
+        };
+
+        const user = await this.getOneUser(filter);
+
+        if (!user) {
+            throw new Error('No existe usuario con ese email');
+        }
+
+        const isMatchPassword = await bcrypt.compare(userToLogin.password, user.password);
+
+        if (!isMatchPassword) {
+            throw new Error('La contraseña no es la correcta');
+        }
+
+        return user;
+    }
+
+    generateAuthToken = async (user) => {
+        const token = jwt.sign({_id: user._id.toString(), email: user.email, rol: user.rol}, process.env.JWT_SECRET, { expiresIn: 300 });
+        return token;
     }
 
 }

@@ -17,5 +17,16 @@ router.post('/api-books/v1/users', async (req, res, next) => {
     }
 });
 
+router.post('/api-books/v1/users/login', async (req, res, next) => {
+    try {
+        const userToLogin = req.body;
+        const user = await userServices.login(userToLogin);
+        const token = await userServices.generateAuthToken(user);
+        return res.status(201).send({user: user, token: token});
+    } catch (error) {
+        next(error);
+    }
+});
+
 
 module.exports = router;

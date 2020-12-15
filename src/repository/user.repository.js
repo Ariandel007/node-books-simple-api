@@ -14,6 +14,10 @@ class UserRepository {
         if (filterParams.id != null) {
             filter['_id'] = filterParams.id;
         }
+
+        if (filterParams.email != null) {
+            filter['email'] = filterParams.email;
+        }
     
         return await User.findOne(filter).exec();
     }
