@@ -3,12 +3,13 @@ const router = new express.Router();
 const BookService = require('../services/book.service');
 const bookServices = new BookService();
 const BookToUpdateDTO = require('../dtos/book-to-update-dto');
+const QueryStringListBooksDto = require('../dtos/query-string-list-books-dto');
 
 router.get('/api-books/v1/books', async (req, res, next) => {
     try {
-        const books = await bookServices.getAllBooks();
+        const queryBooks = new QueryStringListBooksDto(req.query);
+        const books = await bookServices.getAllBooks(queryBooks);
         return res.status(200).send(books);
-
     } catch(error) {
         next(error);
     }

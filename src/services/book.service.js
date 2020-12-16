@@ -6,8 +6,8 @@ class BookService {
         this.bookRepository = new BookRepository();
     }
 
-    getAllBooks = async () => {
-        return await this.bookRepository.getAll();
+    getAllBooks = async (queryBooks) => {
+        return await this.bookRepository.getAll(queryBooks);
     }
 
     getOneBook = async (filterParams) => {

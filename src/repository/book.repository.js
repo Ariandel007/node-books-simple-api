@@ -4,9 +4,10 @@ class BookRepository {
 
     constructor() {}
 
-    getAll = async () => {
+    getAll = async (queryBooks) => {
         const filter = {};
-        return await Book.find(filter).exec();
+        
+        return await Book.find(filter).sort([queryBooks.sortBy, queryBooks.typeSorting]).skip(queryBooks.skip).limit(queryBooks.limit).exec();
     }
     
     getOne = async (filterParams) => {
