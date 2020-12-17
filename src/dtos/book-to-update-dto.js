@@ -1,6 +1,9 @@
 class BookToUpdateDTO {
     constructor(bookToUpdate) {
-        
+        if (bookToUpdate._id != null) {
+            this._id = bookToUpdate._id;
+        }
+
         if (bookToUpdate.isbn != null) {
             this.isbn = bookToUpdate.isbn;
         }

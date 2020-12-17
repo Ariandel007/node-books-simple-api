@@ -1,5 +1,8 @@
 class UserToUpdateDTO {
     constructor(userToUpdate) {
+        if (userToUpdate._id != null) {
+            this._id = userToUpdate._id;
+        }
 
         if (userToUpdate.firstName != null) {
             this.firstName = userToUpdate.firstName;

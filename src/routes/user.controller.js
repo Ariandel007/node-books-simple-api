@@ -4,6 +4,7 @@ const UserService = require('../services/user.service');
 const userServices = new UserService();
 const UserToUpdateDTO = require('../dtos/user-to-update-dto');
 const UserToCreateDTO = require('../dtos/user-to-create-dto');
+const UserLogedDTO = require('../dtos/user-loged-dto');
 
 router.post('/api-books/v1/users', async (req, res, next) => {
     try {
@@ -22,7 +23,7 @@ router.post('/api-books/v1/users/login', async (req, res, next) => {
         const userToLogin = req.body;
         const user = await userServices.login(userToLogin);
         const token = await userServices.generateAuthToken(user);
-        return res.status(201).send({user: user, token: token});
+        return res.status(201).send({user: new UserLogedDTO(user), token: token});
     } catch (error) {
         next(error);
     }

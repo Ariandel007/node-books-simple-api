@@ -1,5 +1,8 @@
 class UserToCreateDTO {
     constructor(userToCreate) {
+        if (userToCreate._id != null) {
+            this._id = userToCreate._id;
+        }
 
         if (userToCreate.firstName != null) {
             this.firstName = userToCreate.firstName;
