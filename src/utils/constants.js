@@ -5,6 +5,12 @@ const states = {
     ENVOY: 'envoy'
 }
 
-export default {
-    states
+const groups = {
+    admin: ['admin'],
+    users: ['user', 'admin'],
+}
+
+module.exports = {
+    states,
+    groups
 }

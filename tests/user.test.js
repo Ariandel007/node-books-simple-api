@@ -3,9 +3,13 @@ const app = require('../src/app');
 const User = require('../src/models/user');
 const UserRepository = require('../src/repository/user.repository');
 const userRepository = new UserRepository();
-const { userOneId, userOneToInit, setupDataBase } = require('./fixtures/db');
+const { 
+    userOneId, userOneToInit, adminOneToInit,
+    adminOneId, setupDataBase 
+} = require('./fixtures/db');
 
 let tokenuserToInit = '';
+let tokenadmiToInit = '';
 
 beforeEach(setupDataBase);
 
@@ -51,6 +55,22 @@ test('Should login an existing user', async () => {
     tokenuserToInit = response.body.token;
 });
 
-test('User can see his order', async() => {
-    console.log(tokenuserToInit);
+test('Should login an existing admin', async () => {
+    const response = await request(app).post('/api-books/v1/users/login').send({
+        email: adminOneToInit.email,
+        password: adminOneToInit.password
+    }).expect(201);
+
+    const user = await userRepository.getOne({id: response.body.user._id});
+    
+    expect(user.email).toBe(adminOneToInit.email.toLowerCase());
+    expect(user.rol).toBe('admin');
+    // guardamos el token para usarlos en futuros pruebas con el request
+    tokenadmiToInit = response.body.token;
+});
+
+test('User can see his orders', async() => {
+    const response = await request(app).get('/api-books/v1/users/my-orders')
+    .set('Authorization', `Bearer ${tokenuserToInit}`)
+    .send({}).expect(201);
 });

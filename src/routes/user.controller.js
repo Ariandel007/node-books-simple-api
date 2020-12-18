@@ -1,5 +1,6 @@
 const express = require('express');
 const router = new express.Router();
+const { authUsers } = require('../middleware/auth.middleware');
 const UserService = require('../services/user.service');
 const userServices = new UserService();
 const UserToUpdateDTO = require('../dtos/user-to-update-dto');
@@ -29,9 +30,9 @@ router.post('/api-books/v1/users/login', async (req, res, next) => {
     }
 });
 
-router.get('/api-books/v1/users/my-orders', async (req, res, next) => {
+router.get('/api-books/v1/users/my-orders', authUsers, async (req, res, next) => {
     try {
-        
+        return res.status(201).send({message: 'TEST'});
     } catch (error) {
         next(error);
     }

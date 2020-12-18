@@ -1,4 +1,5 @@
 const express = require('express');
+const { authAdmins } = require('../middleware/auth.middleware');
 const router = new express.Router();
 const BookService = require('../services/book.service');
 const bookServices = new BookService();
@@ -31,7 +32,7 @@ router.get('/api-books/v1/books/:id', async (req, res, next) => {
 
 
 // esto solo un admin podra hacerlo
-router.post('/api-books/v1/books', async (req, res, next) => {
+router.post('/api-books/v1/books', authAdmins, async (req, res, next) => {
     try {
         const newBook = req.body;
         const bookCreated = await bookServices.create(newBook);
@@ -43,7 +44,7 @@ router.post('/api-books/v1/books', async (req, res, next) => {
 });
 
 // esto solo un admin podra hacerlo
-router.delete('/api-books/v1/books/:id', async (req, res, next) => {
+router.delete('/api-books/v1/books/:id', authAdmins, async (req, res, next) => {
     try {
         const id = req.params.id;
         await bookServices.deleteById(id);
@@ -54,7 +55,7 @@ router.delete('/api-books/v1/books/:id', async (req, res, next) => {
 });
 
 // esto solo un admin podra hacerlo
-router.patch('/api-books/v1/books/:id', async (req, res, next) => {
+router.patch('/api-books/v1/books/:id', authAdmins, async (req, res, next) => {
     try {
         const id = req.params.id;
         const taskToUpdate = req.body;

@@ -31,6 +31,9 @@ const bookSchema = new mongoose.Schema(
                     throw new Error('El stock debe ser entero');
                 }
             }
+        },
+        image: {
+            type: Buffer
         }
     },
     {
