@@ -72,5 +72,5 @@ test('Should login an existing admin', async () => {
 test('User can see his orders', async() => {
     const response = await request(app).get('/api-books/v1/users/my-orders')
     .set('Authorization', `Bearer ${tokenuserToInit}`)
-    .send({}).expect(201);
+    .send({}).expect(200);
 });

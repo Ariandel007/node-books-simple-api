@@ -16,6 +16,23 @@ class UserService {
         return await this.userRepository.getOne(filterParams);
     }
 
+    getOrdersOfUser = async (filterParams, queryOrders) => {
+        const currentUser = await this.userRepository.getOne(filterParams);
+
+        // este populate llenara la propiedad virtual orders 
+        await currentUser.populate({
+            path: 'orders',
+            //match: {},
+            options: {
+                limit: queryOrders.limit,
+                skip: queryOrders.skip,
+                sort: [queryOrders.sortBy, queryOrders.typeSorting]
+            }
+        }).execPopulate();
+
+        return currentUser.orders;
+    }
+
     deleteById = async (id) => {
         return await this.userRepository.deleteById(id);
     }

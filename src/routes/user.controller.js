@@ -6,6 +6,7 @@ const userServices = new UserService();
 const UserToUpdateDTO = require('../dtos/user-to-update-dto');
 const UserToCreateDTO = require('../dtos/user-to-create-dto');
 const UserLogedDTO = require('../dtos/user-loged-dto');
+const QueryStringListOrdersDto = require('../dtos/query-string-list-orders-dto');
 
 router.post('/api-books/v1/users', async (req, res, next) => {
     try {
@@ -32,10 +33,54 @@ router.post('/api-books/v1/users/login', async (req, res, next) => {
 
 router.get('/api-books/v1/users/my-orders', authUsers, async (req, res, next) => {
     try {
-        return res.status(201).send({message: 'TEST'});
+        const idUser = req.decodedToken._id;
+
+        const filterParams = {
+            id: idUser
+        }
+
+        const queryOrders = new QueryStringListOrdersDto(req.query);
+
+        const myOrders = await userServices.getOrdersOfUser(filterParams, queryOrders);
+        
+        return res.status(200).send(myOrders);
     } catch (error) {
         next(error);
     }
 });
 
-module.exports = router;
+router.get('/api-books/v1/users/my-profile', authUsers, async (req, res, next) => {
+    try {
+        const idUser = req.decodedToken._id;
+        const filterParams = {
+            _id: idUser
+        }
+        const currentUser = await userServices.getOneUser(filterParams);
+        const currentUserDTO = new UserLogedDTO(currentUser);
+
+        return res.status(200).send(currentUserDTO);
+    } catch (error) {
+        next(error);
+    }
+});
+
+router.patch('/api-books/v1/users/update-my-profile', authUsers, async (req, res, next) => {
+    try {
+        const idUser = req.decodedToken._id;
+        const userToUpdate = new UserToUpdateDTO(req.body);
+
+        if (idUser !== userToUpdate._id) {
+            throw new Error('Usted no puede actualizar este usuario');
+        }
+
+        const userUpdated = await userServices.update(userToUpdate);
+
+        return res.status(200).send(userUpdated);
+    } catch (error) {
+        next(error);
+    }
+});
+
+
+
+module.exports = router; 
