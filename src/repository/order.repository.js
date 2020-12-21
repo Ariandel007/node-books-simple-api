@@ -4,9 +4,11 @@ class OrderRepository {
 
     constructor() {}
 
-    getAll = async () => {
+    getAll = async (queryOrders) => {
         const filter = {};
-        return await Order.find(filter).exec();
+        return await Order.find(filter)
+        .populate({ path: 'details.book' }).populate({ path: 'client' })
+        .sort([queryOrders.sortBy, queryOrders.typeSorting]).skip(queryOrders.skip).limit(queryOrders.limit).exec();
     }
     
     getOne = async (filterParams) => {

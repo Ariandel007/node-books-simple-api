@@ -55,12 +55,10 @@ router.delete('/api-books/v1/books/:id', authAdmins, async (req, res, next) => {
 });
 
 // esto solo un admin podra hacerlo
-router.patch('/api-books/v1/books/:id', authAdmins, async (req, res, next) => {
+router.patch('/api-books/v1/books', authAdmins, async (req, res, next) => {
     try {
-        const id = req.params.id;
         const taskToUpdate = req.body;
         const taskUpdateDTO = new BookToUpdateDTO(taskToUpdate);
-        task['_id'] = id;
         const taskUpdated = await bookServices.update(taskUpdateDTO);
         return res.status(200).send(taskUpdated);
     } catch (error) {
