@@ -18,12 +18,16 @@ class OrderService {
         return await this.orderRepository.deleteById(id);
     }
 
-    create = async (order) => {
-        return await this.orderRepository.create(order);
-    }
+    // create = async (order) => {
+    //     return await this.orderRepository.create(order);
+    // }
 
     update = async (orderToUpdate) => {
         return await this.orderRepository.update(orderToUpdate);
+    }
+
+    makeOrder = async (order) => {
+        return await this.orderRepository.makeOrder(order);
     }
 
 }

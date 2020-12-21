@@ -19,6 +19,9 @@ class UserService {
     getOrdersOfUser = async (filterParams, queryOrders) => {
         const currentUser = await this.userRepository.getOne(filterParams);
 
+        const sort = {};
+        sort[queryOrders.sortBy] = queryOrders.typeSorting;
+
         // este populate llenara la propiedad virtual orders 
         await currentUser.populate({
             path: 'orders',
@@ -26,7 +29,7 @@ class UserService {
             options: {
                 limit: queryOrders.limit,
                 skip: queryOrders.skip,
-                sort: [queryOrders.sortBy, queryOrders.typeSorting]
+                sort: sort
             }
         }).execPopulate();
 

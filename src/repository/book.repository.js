@@ -6,8 +6,11 @@ class BookRepository {
 
     getAll = async (queryBooks) => {
         const filter = {};
+
+        const sort = {};
+        sort[queryBooks.sortBy] = queryBooks.typeSorting;
         
-        return await Book.find(filter).sort([queryBooks.sortBy, queryBooks.typeSorting]).skip(queryBooks.skip).limit(queryBooks.limit).exec();
+        return await Book.find(filter).sort(sort).skip(queryBooks.skip).limit(queryBooks.limit).exec();
     }
     
     getOne = async (filterParams) => {

@@ -1,3 +1,4 @@
+const express = require('express');
 const { authUsers } = require('../middleware/auth.middleware');
 const OrderService = require('../services/order.service');
 const orderServices = new OrderService();
@@ -20,10 +21,16 @@ router.post('/api-books/v1/orders', authUsers ,async (req, res, next) => {
     try {
         req.body.client = req.decodedToken._id;
         const orderToCreateDTO = new OrderToCreateDTO(req.body);
-        const orderCreated = await orderServices.create(orderToCreateDTO);
+        
+        if (orderToCreateDTO.details.length > 10) {
+            throw new Error('El numero maximo de libros individuales por orden es de 10');
+        }
+
+        const orderCreated = await orderServices.makeOrder(orderToCreateDTO);
         return res.status(201).send(orderCreated);
     } catch(error) {
         next(error);
     }
 });
 
+module.exports = router;
