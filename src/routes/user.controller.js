@@ -31,6 +31,8 @@ router.post('/api-books/v1/users/login', async (req, res, next) => {
     }
 });
 
+
+// este servicio hace lo mismo que el getOrders, solo que usa los populates de otro modo, se usan los dos por fines de aprendizaje
 router.get('/api-books/v1/users/my-orders', authUsers, async (req, res, next) => {
     try {
         const idUser = req.decodedToken._id;

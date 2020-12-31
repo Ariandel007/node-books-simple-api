@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 class UserService {
-    
+
     constructor() {
         this.userRepository = new UserRepository();
     }
@@ -22,14 +22,21 @@ class UserService {
         const sort = {};
         sort[queryOrders.sortBy] = queryOrders.typeSorting;
 
-        // este populate llenara la propiedad virtual orders 
+        // este populate llenara la propiedad virtual orders
         await currentUser.populate({
             path: 'orders',
             //match: {},
             options: {
                 limit: queryOrders.limit,
                 skip: queryOrders.skip,
-                sort: sort
+                sort: sort,
+                populate: [{
+                    path: 'details.book',
+                },
+                {
+                    path: 'client',
+                }
+                ]
             }
         }).execPopulate();
 
