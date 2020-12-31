@@ -32,9 +32,11 @@ class UserService {
                 sort: sort,
                 populate: [{
                     path: 'details.book',
+                    select: { '_id': 1,'isbn':1, 'title':1, 'author':1, 'publisher': 1},
                 },
                 {
                     path: 'client',
+                    select: { '_id': 1,'firstName':1, 'lastName':1, 'email':1, 'address': 1},
                 }
                 ]
             }

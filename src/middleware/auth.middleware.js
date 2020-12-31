@@ -10,7 +10,7 @@ class Auth {
     auth = async (req, res, next) => {
         try {
             const token = req.header('Authorization').replace('Bearer ', '');
-            const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+            const decodedToken = jwt.verify(token, process.env.JWT_SECRET, ['HS256']); // añadimos el algoritmo por default para evitar ataques de alg:none
     
             if (this.groupsAllowed.some(x => x == decodedToken.rol)) {
                 req.decodedToken = decodedToken;

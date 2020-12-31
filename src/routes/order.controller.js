@@ -1,14 +1,15 @@
 const express = require('express');
-const { authUsers } = require('../middleware/auth.middleware');
+const { authUsers, authAdmins } = require('../middleware/auth.middleware');
 const OrderService = require('../services/order.service');
 const orderServices = new OrderService();
 const router = new express.Router();
 const QueryStringListOrdersDto = require('../dtos/query-string-list-orders-dto');
 const OrderToCreateDTO = require('../dtos/order-to-create-dto');
 
-router.get('/api-books/v1/orders', authUsers ,async (req, res, next) => {
+
+// Este es para los administradores para que vean las ordenes de todos los usuarios
+router.get('/api-books/v1/orders', authAdmins ,async (req, res, next) => {
     try {
-        // falta validacion de filtrado de que usuario esta viendo las ordenes
         const queryOrders = new QueryStringListOrdersDto(req.query);
         const orders = await orderServices.getAllOrders(queryOrders);
         return res.status(200).send(orders);
