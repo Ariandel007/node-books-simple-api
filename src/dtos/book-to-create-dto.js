@@ -1,4 +1,4 @@
-class BookToUpdateDTO {
+class BookToCreateDTO {
     constructor(bookToUpdate) {
         if (bookToUpdate._id != null) {
             this._id = bookToUpdate._id;
@@ -34,4 +34,4 @@ class BookToUpdateDTO {
     }
 }
 
-module.exports = BookToUpdateDTO;
+module.exports = BookToCreateDTO;

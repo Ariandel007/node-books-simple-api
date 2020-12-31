@@ -41,6 +41,15 @@ const bookSchema = new mongoose.Schema(
     }
 );
 
+bookSchema.methods.toJSON = function () { // ya que el unico modo en que se piensa enviar al imagen es como una imagen y no como json agregaremos esto
+    const book = this;
+    const bookObject = book.toObject();
+
+    delete bookObject.image;
+
+    return bookObject;
+}
+
 const Book = mongoose.model('Book', bookSchema);
 
 module.exports = Book;

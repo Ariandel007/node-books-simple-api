@@ -10,8 +10,8 @@ const orderRouter = require('./routes/order.controller');
 
 const app = express();
 
-//para reconocer json requests
-app.use(express.json());
+//para reconocer json requests y limitamos que tan grandes seran los requests
+app.use(express.json({ limit: '10mb' }));
 // para mitigar inyecciones NoSQL
 app.use(mongoSanitize({
     replaceWith: '_'
