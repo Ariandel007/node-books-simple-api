@@ -94,6 +94,22 @@ router.patch('/api-books/v1/books/upload-image/:id', authAdmins, upload.single('
     return res.status(400).send({error: error.message});// aca capturamos el error que arrojamos en el fileFilter
 })
 
+router.get('/api-books/v1/books/fetch-image/:id', async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const book = await bookServices.getOneBook({id: id});
+
+        if (!book || !book.image) {
+            throw new Error();
+        }
+
+        res.set('Content-Type', 'image/jpg');
+        return res.send(book.image);
+    } catch(error) {
+        next(error);
+    }
+});
+
 // esto solo un admin podra hacerlo
 router.patch('/api-books/v1/books', authAdmins, async (req, res, next) => {
     try {
