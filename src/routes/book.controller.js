@@ -79,7 +79,7 @@ router.delete('/api-books/v1/books/:id', authAdmins, async (req, res, next) => {
 router.patch('/api-books/v1/books/upload-image/:id', authAdmins, upload.single('image'), async (req, res, next) => {/*upload.single() espera recibir el key que aparecera en el form-data en el body*/
     try {
         const id = req.params.id;
-        const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250}).png().toBuffer();
+        const buffer = await sharp(req.file.buffer).resize({ width: 200, height: 300}).png().toBuffer();
 
         const bookToUpdate = {
             _id: id,
