@@ -31,6 +31,10 @@ class BookToCreateDTO {
         if (bookToUpdate.image != null) {
             this.image = bookToUpdate.image;
         }
+
+        if (bookToUpdate.price != null) {
+            this.price = bookToUpdate.price;
+        }
     }
 }
 
