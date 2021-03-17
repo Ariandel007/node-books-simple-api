@@ -11,7 +11,7 @@ class BookRepository {
         sort[queryBooks.sortBy] = queryBooks.typeSorting;
 
         if (queryBooks.title) {
-            filter['title'] = queryBooks.title;
+            filter['title'] = { $regex: '.*' + queryBooks.title + '.*',  $options: 'i' };
         }
         
         return await Book.find(filter).sort(sort).skip(queryBooks.skip).limit(queryBooks.limit).exec();
