@@ -9,6 +9,10 @@ class BookRepository {
 
         const sort = {};
         sort[queryBooks.sortBy] = queryBooks.typeSorting;
+
+        if (queryBooks.title) {
+            filter['title'] = queryBooks.title;
+        }
         
         return await Book.find(filter).sort(sort).skip(queryBooks.skip).limit(queryBooks.limit).exec();
     }

@@ -17,7 +17,10 @@ class QueryStringListBooksDto {
             }
             if (query.typeSorting) {
                 this.typeSorting = parseInt(query.typeSorting.trim());
-            }    
+            }
+            if (query.title) {
+                this.title = title.trim();
+            }  
         }
     }
 }
