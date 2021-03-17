@@ -11,7 +11,10 @@ class QueryStringListBooksDto {
             }
             if (query.limit != null) {
                 this.limit = parseInt(query.limit.trim()) < 30 ? parseInt(query.limit.trim()) : 30;
+            } else {
+                this.limit = 30;
             }
+
             if (query.sortBy) {
                 this.sortBy = query.sortBy.trim();
             }
